@@ -114,7 +114,7 @@ export default function ModulTable({ data, formInput, onBack }: ModulTableProps)
       
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 no-print">
         <button onClick={onBack} className="flex items-center gap-2 text-mint-700 font-bold hover:text-mint-900 transition-colors">
-          <ChevronLeft className="w-5 h-5" /> Kembali
+          <ChevronLeft className="w-5 h-5" /> Edit Data
         </button>
 
         <div className="relative">
@@ -170,7 +170,7 @@ export default function ModulTable({ data, formInput, onBack }: ModulTableProps)
                 <tr>
                   <td className="font-semibold border border-slate-300 p-2">Pertemuan / Durasi</td>
                   <td className="border border-slate-300 p-2">
-                    {data.identitas.meetings} ({data.identitas.duration})
+                    {data.identitas.updateMeetings} {data.identitas.duration}
                   </td>
                 </tr>
               </tbody>
