@@ -49,65 +49,69 @@ const downloadPDF = async () => {
   if (!containerRef.current) return;
   
   try {
-    const element = containerRef.current;
-    
-    // 1. Sembunyikan opsi export
+    // 1. Sembunyikan dropdown agar tidak ikut terfoto
     setShowExportOptions(false);
     
-    // Tambahkan sedikit delay agar state UI benar-benar bersih
-    await new Promise(resolve => setTimeout(resolve, 100));
+    // Beri waktu browser untuk menutup AnimatePresence (motion)
+    await new Promise(resolve => setTimeout(resolve, 300));
 
+    const element = containerRef.current;
+    
     const canvas = await html2canvas(element, {
-      scale: 2, // Kualitas ditingkatkan kembali ke 2
+      scale: 2, // Tetap gunakan 2 untuk kualitas cetak yang tajam
       useCORS: true,
       logging: false,
-      // --- PERBAIKAN UTAMA: Konversi warna OKLCH ke RGB agar tidak error ---
+      backgroundColor: "#ffffff", // Memastikan background tidak transparan
       onclone: (clonedDoc) => {
         const elements = clonedDoc.getElementsByTagName('*');
         for (let i = 0; i < elements.length; i++) {
           const el = elements[i] as HTMLElement;
           const style = window.getComputedStyle(el);
           
-          // Paksa browser clone mengambil nilai warna yang sudah terkomputasi (RGB)
+          // Konversi warna modern ke format standar RGB agar library tidak crash
           if (style.color.includes('oklch')) el.style.color = style.color;
           if (style.backgroundColor.includes('oklch')) el.style.backgroundColor = style.backgroundColor;
           if (style.borderColor.includes('oklch')) el.style.borderColor = style.borderColor;
+          
+          // Pastikan tabel tidak terpotong di tengah baris (Force Break Avoid)
+          if (el.tagName === 'TR' || el.tagName === 'SECTION') {
+            el.style.pageBreakInside = 'avoid';
+          }
         }
       }
-      // -------------------------------------------------------------------
     });
 
-    const imgData = canvas.toDataURL('image/jpeg', 0.95);
-    const pdf = new jsPDF({
-      orientation: 'portrait',
-      unit: 'mm',
-      format: 'a4',
-    });
-
+    const imgData = canvas.toDataURL('image/jpeg', 1.0);
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    
     const pdfWidth = pdf.internal.pageSize.getWidth();
     const pdfHeight = pdf.internal.pageSize.getHeight();
-    const imgProps = pdf.getImageProperties(imgData);
-    const contentHeight = (imgProps.height * pdfWidth) / imgProps.width;
+    const imgWidth = canvas.width;
+    const imgHeight = canvas.height;
+    
+    // Hitung tinggi gambar dalam unit mm sesuai lebar PDF
+    const ratio = pdfWidth / imgWidth;
+    const canvasHeightInMm = imgHeight * ratio;
 
-    let heightLeft = contentHeight;
+    let heightLeft = canvasHeightInMm;
     let position = 0;
 
     // Halaman Pertama
-    pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, contentHeight);
+    pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, canvasHeightInMm);
     heightLeft -= pdfHeight;
 
-    // Tambah halaman otomatis jika konten sangat panjang
+    // Halaman Selanjutnya (Jika dokumen panjang)
     while (heightLeft > 0) {
-      position = heightLeft - contentHeight;
+      position = heightLeft - canvasHeightInMm; // Geser posisi gambar ke atas
       pdf.addPage();
-      pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, contentHeight);
+      pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, canvasHeightInMm);
       heightLeft -= pdfHeight;
     }
 
     pdf.save(`RPPM_${formInput.subject || 'Dokumen'}.pdf`);
   } catch (error) {
     console.error("Gagal export PDF:", error);
-    alert("Terjadi kesalahan teknis warna. Silakan coba klik tombol download sekali lagi.");
+    alert("Gagal membuat PDF. Coba gunakan fitur 'Print' (Ctrl+P) dan pilih 'Save as PDF' jika masalah berlanjut.");
   }
 };
   return (
