@@ -261,7 +261,7 @@ export default function ModulTable({ data, formInput, onBack }: ModulTableProps)
           <table className="w-full border-none border-collapse">
             <tbody>
               <tr>
-                <td className="w-1/2 text-left align-top border-none p-0 pl-5 md:pl-32">
+                <td className="w-1/2 text-left align-top border-none p-0 pl-2 md:pl-32">
                   <p className="mb-1">Mengetahui,</p>
                   <p className="mb-12">Kepala Sekolah</p>
                   <p className="font-bold underline uppercase">{formInput.principalName}</p>
