@@ -156,9 +156,95 @@ export default function ModulTable({ data, formInput, onBack }: ModulTableProps)
             </table>
           </section>
 
-          {/* ... Bagian Section 2 s/d 5 (Sama secara struktur, pastikan border-collapse digunakan) ... */}
-          {/* Section 5: Asesmen */}
+          {/* Section 2: Identifikasi */}
           <section>
+            <h2 className="text-sm font-bold bg-mint-50 p-2 border border-slate-300">2. IDENTIFIKASI</h2>
+            <table className="spreadsheet-table">
+              <tbody>
+                <tr>
+                  <td className="w-1/3 font-semibold">Murid</td>
+                  <td className="text-justify leading-relaxed">{data.identifikasi.students}</td>
+                </tr>
+                <tr>
+                  <td className="font-semibold">Materi Pelajaran</td>
+                  <td className="text-justify leading-relaxed">{data.identifikasi.material}</td>
+                </tr>
+                <tr>
+                  <td className="font-semibold">Capaian Dimensi Lulusan</td>
+                  <td className="text-justify leading-relaxed">{data.identifikasi.dimensi}</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          {/* Section 3: Desain Pembelajaran */}
+          <section>
+            <h2 className="text-sm font-bold bg-mint-50 p-2 border border-slate-300">3. DESAIN PEMBELAJARAN</h2>
+            <table className="spreadsheet-table">
+              <tbody>
+                <tr>
+                  <td className="w-1/3 font-semibold">Capaian Pembelajaran</td>
+                  <td className="text-justify leading-relaxed">{data.desain.cp}</td>
+                </tr>
+                <tr>
+                  <td className="font-semibold">Lintas Disiplin Ilmu</td>
+                  <td className="text-justify leading-relaxed">{data.desain.crossDisciplinary}</td>
+                </tr>
+                <tr>
+                  <td className="font-semibold">Tujuan Pembelajaran</td>
+                  <td className="text-justify leading-relaxed">{data.desain.tp}</td>
+                </tr>
+                <tr>
+                  <td className="font-semibold">Topik Pembelajaran</td>
+                  <td className="text-justify leading-relaxed">{data.desain.topic}</td>
+                </tr>
+                <tr>
+                  <td className="font-semibold">Praktik Pedagogis</td>
+                  <td className="text-justify leading-relaxed">{data.desain.pedagogy}</td>
+                </tr>
+                <tr>
+                  <td className="font-semibold">Kemitraan Pembelajaran</td>
+                  <td className="text-justify leading-relaxed">{data.desain.partnership}</td>
+                </tr>
+                <tr>
+                  <td className="font-semibold">Lingkungan Pembelajaran</td>
+                  <td className="text-justify leading-relaxed">{data.desain.environment}</td>
+                </tr>
+                <tr>
+                  <td className="font-semibold">Pemanfaatan Digital</td>
+                  <td className="text-justify leading-relaxed">{data.desain.digitalUtilization}</td>
+                </tr>
+                <tr>
+                  <td className="font-semibold">Adaptasi Lokal (Kontekstual)</td>
+                  <td className="text-justify leading-relaxed bg-mint-50/50">{data.desain.adaptasiLokal}</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          {/* Section 4: Pengalaman Belajar */}
+          <section>
+            <h2 className="text-sm font-bold bg-mint-50 p-2 border border-slate-300">4. PENGALAMAN BELAJAR</h2>
+            <table className="spreadsheet-table">
+              <tbody>
+                <tr>
+                  <td className="w-1/3 font-semibold">Memahami (Kegiatan Awal)</td>
+                  <td className="text-justify leading-relaxed italic">{data.pengalaman.memahami}</td>
+                </tr>
+                <tr>
+                  <td className="font-semibold">Mengaplikasi (Kegiatan Inti)</td>
+                  <td className="text-justify leading-relaxed">{data.pengalaman.mengaplikasi}</td>
+                </tr>
+                <tr>
+                  <td className="font-semibold">Merefleksi (Kegiatan Penutup)</td>
+                  <td className="text-justify leading-relaxed italic">{data.pengalaman.merefleksi}</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          {/* Section 5: Asesmen */}
+<section>
             <h2 className="text-xs font-bold bg-slate-100 p-2 border border-slate-300 uppercase tracking-wider">5. ASESMEN PEMBELAJARAN</h2>
             <table className="w-full border-collapse border border-slate-300 mt-1">
               <tbody>
