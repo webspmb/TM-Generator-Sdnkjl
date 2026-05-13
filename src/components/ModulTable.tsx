@@ -287,7 +287,7 @@ export default function ModulTable({ data, formInput, onBack }: ModulTableProps)
           
                   {/* Spacer Statis untuk Tanda Tangan */}
                   <div className="mt-20"> 
-                    <p className="font-bold underline uppercase mb-0">{formInput.principalName}</p>
+                    <p className="font-bold underline mb-0">{formInput.principalName}</p>
                     <p className="text-sm mt-0">NIP. {formInput.principalNip}</p>
                   </div>
                 </td>
@@ -299,7 +299,7 @@ export default function ModulTable({ data, formInput, onBack }: ModulTableProps)
           
                   {/* Spacer Statis yang SAMA (mt-20) */}
                   <div className="mt-20">
-                    <p className="font-bold underline uppercase mb-0">{formInput.teacherName}</p>
+                    <p className="font-bold underline mb-0">{formInput.teacherName}</p>
                     <p className="text-sm mt-0">NIP. {formInput.teacherNip}</p>
                   </div>
                 </td>
