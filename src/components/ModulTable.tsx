@@ -50,28 +50,51 @@ const downloadPDF = async () => {
     
     try {
       const element = containerRef.current;
+      
+      // 1. Beri jeda sedikit agar UI state 'showExportOptions' benar-benar hilang
+      setShowExportOptions(false);
+      
+      // 2. Gunakan opsi html2canvas yang lebih stabil
       const canvas = await html2canvas(element, {
-        scale: 2,
+        scale: 1.5, // Turunkan sedikit dari 2 jika konten sangat panjang agar tidak crash
         useCORS: true,
-        logging: false
+        logging: false,
+        windowWidth: element.scrollWidth,
+        windowHeight: element.scrollHeight,
       });
 
-      const imgData = canvas.toDataURL('image/png');
+      const imgData = canvas.toDataURL('image/jpeg', 0.7); // Gunakan JPEG 0.7 untuk kompresi lebih baik
       const pdf = new jsPDF({
         orientation: 'portrait',
         unit: 'mm',
         format: 'a4',
       });
 
-      const imgProps = pdf.getImageProperties(imgData);
       const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+      const imgProps = pdf.getImageProperties(imgData);
+      const contentHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
-      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-      pdf.save(`RPPM_${formInput.subject}.pdf`);
-      setShowExportOptions(false);
+      // 3. Logika auto-paging sederhana
+      let heightLeft = contentHeight;
+      let position = 0;
+
+      // Halaman Pertama
+      pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, contentHeight);
+      heightLeft -= pdfHeight;
+
+      // Tambah halaman jika konten masih ada (untuk dokumen panjang)
+      while (heightLeft >= 0) {
+        position = heightLeft - contentHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, 'JPEG', 0, position, pdfWidth, contentHeight);
+        heightLeft -= pdfHeight;
+      }
+
+      pdf.save(`RPPM_${formInput.subject || 'Dokumen'}.pdf`);
     } catch (error) {
       console.error("Gagal export PDF:", error);
+      alert("Terjadi kesalahan saat membuat PDF. Pastikan browser Anda mendukung atau coba gunakan fitur 'Cetak ke PDF' di browser.");
     }
   };
   return (
