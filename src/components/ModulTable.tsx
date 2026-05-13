@@ -3,6 +3,8 @@ import { GeneratedModul, ModulFormData } from '../types';
 import { useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { cn } from '../lib/utils';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 interface ModulTableProps {
   data: GeneratedModul;
@@ -43,7 +45,35 @@ export default function ModulTable({ data, formInput, onBack }: ModulTableProps)
     link.click();
     URL.revokeObjectURL(url);
   };
+const downloadPDF = async () => {
+    if (!containerRef.current) return;
+    
+    try {
+      const element = containerRef.current;
+      const canvas = await html2canvas(element, {
+        scale: 2,
+        useCORS: true,
+        logging: false
+      });
 
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4',
+      });
+
+      const imgProps = pdf.getImageProperties(imgData);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      pdf.save(`RPPM_${formInput.subject}.pdf`);
+      setShowExportOptions(false);
+    } catch (error) {
+      console.error("Gagal export PDF:", error);
+    }
+  };
   return (
     <div className="max-w-5xl mx-auto space-y-8 pb-32">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 no-print">
@@ -80,11 +110,11 @@ export default function ModulTable({ data, formInput, onBack }: ModulTableProps)
                   Format Word (.doc)
                 </button>
                 <button
-                  onClick={downloadWord}
+                  onClick={downloadPDF}
                   className="w-full flex items-center gap-3 px-4 py-3 hover:bg-mint-50 text-mint-900 transition-colors"
                 >
-                  <DownloadCloud className="w-5 h-5 text-mint-600" />
-                  Google Docs
+                  <DownloadCloud className="w-5 h-5 text-red-500" />
+                  Format PDF (.pdf)
                 </button>
               </motion.div>
             )}
