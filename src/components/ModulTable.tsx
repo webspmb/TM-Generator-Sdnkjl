@@ -267,7 +267,7 @@ export default function ModulTable({ data, formInput, onBack }: ModulTableProps)
                   <p className="font-bold underline uppercase">{formInput.principalName}</p>
                   <p className="text-sm">NIP. {formInput.principalNip}</p>
                 </td>
-                <td className="w-1/2 text-left align-top border-none p-0 pl-1 md:pl-32">
+                <td className="w-1/2 text-left align-top border-none p-1">
                   <p className="mb-1">.............., .................. 20....</p>
                   <p className="mb-12">{formInput.position || 'Guru Kelas'}</p>
                   <p className="font-bold underline uppercase">{formInput.teacherName}</p>
