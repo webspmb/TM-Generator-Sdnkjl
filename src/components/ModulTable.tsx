@@ -74,30 +74,43 @@ export default function ModulTable({ data, formInput, onBack }: ModulTableProps)
     <div className="max-w-5xl mx-auto space-y-8 pb-32 px-4 relative">
       {/* CSS Watermark untuk Print Browser */}
       <style dangerouslySetInnerHTML={{ __html: `
-        @media print {
-          .print-watermark {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-45deg);
-            font-size: 5.5rem;
-            font-weight: 900;
-            color: rgba(220, 220, 220, 0.15) !important;
-            z-index: -1;
-            pointer-events: none;
-            white-space: nowrap;
-            display: block !important;
-            text-transform: uppercase;
-            -webkit-print-color-adjust: exact;
-          }
-          .no-print { display: none !important; }
-          @page { margin: 1.5cm; }
-          body { background: white !important; -webkit-print-color-adjust: exact; }
-        }
-        .print-watermark { display: none; }
-        .spreadsheet-table { width: 100%; border-collapse: collapse; margin-top: 4px; }
-        .spreadsheet-table td { border: 1px solid #cbd5e1; padding: 8px; }
-      `}} />
+  @media print {
+    .print-watermark {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-45deg);
+      font-size: 5.5rem;
+      font-weight: 900;
+      color: rgba(220, 220, 220, 0.15) !important;
+      z-index: -1;
+      pointer-events: none;
+      white-space: nowrap;
+      display: block !important;
+      text-transform: uppercase;
+      -webkit-print-color-adjust: exact;
+    }
+    .no-print { display: none !important; }
+    @page { margin: 1.5cm; }
+    body { background: white !important; -webkit-print-color-adjust: exact; }
+  }
+
+  .print-watermark { display: none; }
+  .spreadsheet-table { width: 100%; border-collapse: collapse; margin-top: 4px; }
+  .spreadsheet-table td { border: 1px solid #cbd5e1; padding: 8px; }
+  
+  @media screen {
+    .bg-white {
+      min-height: 29.7cm; /* Tinggi minimal A4 */
+      width: 21cm;        /* Lebar A4 */
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 2rem;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1); 
+      overflow: visible; /* Biarkan memanjang jika konten banyak */
+    }
+  }
+` }} />
       
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 no-print">
         <button onClick={onBack} className="flex items-center gap-2 text-mint-700 font-bold hover:text-mint-900 transition-colors">
