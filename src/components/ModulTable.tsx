@@ -168,8 +168,8 @@ export default function ModulTable({ data, formInput, onBack }: ModulTableProps)
                   <td className="border border-slate-300 p-2">{data.identitas.classSemester}</td>
                 </tr>
                 <tr>
-                  <td className="font-semibold border border-slate-300 p-2">Durasi Pertemuan</td>
-                  <td className="border border-slate-300 p-2">{data.identitas.duration}</td>
+                  <td className="font-semibold border border-slate-300 p-2">Pertemuan</td>
+                  <td className="border border-slate-300 p-2">{data.identitas.materialduration}</td>
                 </tr>
               </tbody>
             </table>
