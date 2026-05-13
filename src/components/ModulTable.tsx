@@ -126,8 +126,8 @@ export default function ModulTable({ data, formInput, onBack }: ModulTableProps)
       {/* Main Document Content */}
       <div ref={containerRef} className="bg-white p-8 md:p-12 shadow-sm border border-slate-200 text-slate-900">
         <div className="text-center mb-10">
-          <h1 className="text-xl font-bold uppercase underline decoration-2 underline-offset-4">RENCANA PELAKSANAAN PEMBELAJARAN MENDALAM (RPPM)</h1>
-          <p className="text-lg font-bold uppercase mt-2">{formInput.subject}</p>
+          <h1 className="text-xl font-bold uppercase">RENCANA PELAKSANAAN PEMBELAJARAN MENDALAM</h1>
+          <p className="text-lg font-bold uppercase mt-2">(RPPM)</p>
         </div>
 
         <div className="space-y-6">
