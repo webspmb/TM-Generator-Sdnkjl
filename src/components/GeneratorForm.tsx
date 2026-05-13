@@ -191,15 +191,43 @@ export default function GeneratorForm({ onSubmit, isLoading }: GeneratorFormProp
           <h2 className="text-xl font-bold text-mint-900">Metode & Durasi</h2>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-4">
-            <label className={labelClass}>Jumlah Pertemuan</label>
-            <div className="flex items-center gap-4">
-              <button type="button" onClick={() => updateMeetings(-1)} className="w-12 h-12 rounded-xl border-2 border-mint-200 flex items-center justify-center hover:bg-mint-50"><Minus className="w-5 h-5"/></button>
-              <span className="text-2xl font-bold w-8 text-center">{formData.meetings}</span>
-              <button type="button" onClick={() => updateMeetings(1)} className="w-12 h-12 rounded-xl border-2 border-mint-200 flex items-center justify-center hover:bg-mint-50"><Plus className="w-5 h-5"/></button>
-            </div>
-          </div>
+<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+  <div className="space-y-4">
+    <label className={labelClass}>Jumlah Pertemuan</label>
+    <div className="flex items-center gap-4">
+      {/* Tombol Kurangi */}
+      <button 
+        type="button" 
+        onClick={() => updateMeetings(-1)} 
+        className="w-12 h-12 rounded-xl border-2 border-mint-200 flex items-center justify-center hover:bg-mint-50 transition-colors"
+      >
+        <Minus className="w-5 h-5 text-mint-600"/>
+      </button>
+
+      {/* Input Langsung */}
+      <input
+        type="number"
+        name="meetings"
+        value={formData.meetings}
+        onChange={(e) => {
+          const val = parseInt(e.target.value) || 1;
+          const diff = val - formData.meetings;
+          updateMeetings(diff);
+        }}
+        className="w-20 h-12 text-center text-xl font-bold bg-white/50 border-2 border-mint-200 rounded-xl focus:ring-2 focus:ring-mint-500 outline-none transition-all"
+        min="1"
+      />
+
+      {/* Tombol Tambah */}
+      <button 
+        type="button" 
+        onClick={() => updateMeetings(1)} 
+        className="w-12 h-12 rounded-xl border-2 border-mint-200 flex items-center justify-center hover:bg-mint-50 transition-colors"
+      >
+        <Plus className="w-5 h-5 text-mint-600"/>
+      </button>
+    </div>
+  </div>
           <div className="space-y-4">
             <label className={labelClass}><Clock className="w-4 h-4"/> Durasi Per Pertemuan</label>
             <input name="duration" value={formData.duration} onChange={handleChange} className={inputClass} placeholder="Contoh: 2 x 35 menit" required />
