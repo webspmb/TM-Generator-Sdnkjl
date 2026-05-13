@@ -43,7 +43,7 @@ export default function GeneratorForm({ onSubmit, isLoading }: GeneratorFormProp
     cp: '',
     tp: '',
     material: '',
-    meetings: 1',
+    meetings: '1',
     duration: '',
     pedagogy: [],
     dimensi: []
