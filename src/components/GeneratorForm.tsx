@@ -45,7 +45,7 @@ export default function GeneratorForm({ onSubmit, isLoading }: GeneratorFormProp
     material: '',
     meetings: 1,
     duration: '',
-    pedagogy: [],
+    pedagogy: ['Inkuiri-Discovery'],
     dimensi: []
   });
 
