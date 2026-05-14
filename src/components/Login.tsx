@@ -120,7 +120,7 @@ export default function Login({ onLogin }: LoginProps) {
           </form>
 
           <p className="mt-8 text-center text-xs text-mint-600 font-medium tracking-wide uppercase">
-            Kurikulum Merdeka • Profesional Edition
+            Profesional Edition
           </p>
         </div>
       </motion.div>
