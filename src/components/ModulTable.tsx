@@ -157,7 +157,7 @@ export default function ModulTable({ data, formInput, onBack }: ModulTableProps)
                 <tr>
                   <td className="font-semibold border border-slate-300 p-2">Pertemuan / Durasi</td>
                   <td className="border border-slate-300 p-2">
-                    {data.identitas.meetings || formInput.meetings || '1'} Pertemuan ({data.identitas.duration})
+                    {formInput.meetings} Pertemuan ({data.identitas.duration})
                   </td>
                 </tr>
               </tbody>
@@ -237,7 +237,7 @@ export default function ModulTable({ data, formInput, onBack }: ModulTableProps)
                   <p className="mb-1">Mengetahui,</p>
                   <p className="mb-0">Kepala Sekolah</p>
                   <div className="mt-20"> 
-                    <p className="font-bold underline mb-0 uppercase">{formInput.principalName}</p>
+                    <p className="font-bold underline mb-0">{formInput.principalName}</p>
                     <p className="text-sm mt-0">NIP. {formInput.principalNip}</p>
                   </div>
                 </td>
@@ -245,7 +245,7 @@ export default function ModulTable({ data, formInput, onBack }: ModulTableProps)
                   <p className="mb-1">................., ................... 20....</p>
                   <p className="mb-0">{formInput.position || 'Guru Kelas'}</p>
                   <div className="mt-20">
-                    <p className="font-bold underline mb-0 uppercase">{formInput.teacherName}</p>
+                    <p className="font-bold underline mb-0">{formInput.teacherName}</p>
                     <p className="text-sm mt-0">NIP. {formInput.teacherNip}</p>
                   </div>
                 </td>
