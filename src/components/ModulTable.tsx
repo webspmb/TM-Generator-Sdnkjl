@@ -39,7 +39,7 @@ export default function ModulTable({ data, formInput, onBack }: ModulTableProps)
           ${content}
           <div style='mso-element:footer' id='f1'>
             <p class="MsoFooter" style="border-top: 1pt solid black; padding-top: 5pt; color: #666666;">
-              ${schoolName} — RPPM Otomatis
+              ${schoolName} — TM Generator App
               <span style='mso-tab-count:2'></span>
               Halaman <span style='mso-field-code: PAGE '></span>
             </p>
@@ -226,7 +226,7 @@ export default function ModulTable({ data, formInput, onBack }: ModulTableProps)
                 </tr>
                 <tr>
                   <td className="font-semibold">Adaptasi Lokal (Kontekstual)</td>
-                  <td className="text-justify leading-relaxed bg-mint-50/50">{data.desain.adaptasiLokal}</td>
+                  <td className="text-justify leading-relaxed">{data.desain.adaptasiLokal}</td>
                 </tr>
               </tbody>
             </table>
@@ -238,22 +238,16 @@ export default function ModulTable({ data, formInput, onBack }: ModulTableProps)
             <table className="spreadsheet-table">
               <tbody>
                 <tr>
-                  <td className="w-1/3 font-semibold italic border border-slate-300 p-2">Memahami</td>
-                  <td className="italic text-justify leading-relaxed border border-slate-300 p-2">
-                    {data.pengalaman.memahami}
-                  </td>
+                  <td className="w-1/3 font-semibold">Memahami</td>
+                  <td className="text-justify leading-relaxed">{data.pengalaman.memahami}</td>
                 </tr>
                 <tr>
-                  <td className="font-semibold border border-slate-300 p-2">Mengaplikasi</td>
-                  <td className="text-justify leading-relaxed border border-slate-300 p-2">
-                    {data.pengalaman.mengaplikasi}
-                  </td>
+                  <td className="font-semibold">Mengaplikasi</td>
+                  <td className="text-justify leading-relaxed">{data.pengalaman.mengaplikasi}</td>
                 </tr>
                 <tr>
-                  <td className="font-semibold italic border border-slate-300 p-2">Merefleksi</td>
-                  <td className="italic text-justify leading-relaxed border border-slate-300 p-2">
-                    {data.pengalaman.merefleksi}
-                  </td>
+                  <td className="font-semibold">Merefleksi</td>
+                  <td className="text-justify leading-relaxed">{data.pengalaman.merefleksi}</td>
                 </tr>
               </tbody>
             </table>
