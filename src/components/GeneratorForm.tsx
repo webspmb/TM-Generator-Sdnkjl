@@ -4,6 +4,13 @@ import { Send, Plus, Minus, School, User as UserIcon, Briefcase, GraduationCap, 
 import { ModulFormData } from '../types';
 import { cn } from '../lib/utils';
 
+// Daftar sekolah yang diperbolehkan
+const ALLOWED_SCHOOLS = [
+  "SD NEGERI KAJULANGKO",
+  "SMP TM GENERATOR APP",
+  "SMA UNGGULAN"
+];
+
 interface GeneratorFormProps {
   onSubmit: (data: ModulFormData) => void;
   isLoading: boolean;
@@ -33,10 +40,10 @@ export default function GeneratorForm({ onSubmit, isLoading }: GeneratorFormProp
     schoolName: '',
     teacherName: '',
     teacherNip: '',
-    position: '',
+    position: 'Guru Kelas',
     principalName: '',
     principalNip: '',
-    level: '',
+    level: 'SD',
     grade: '',
     semester: 'I / Ganjil',
     subject: '',
@@ -48,6 +55,9 @@ export default function GeneratorForm({ onSubmit, isLoading }: GeneratorFormProp
     pedagogy: [],
     dimensi: []
   });
+  
+  // Fungsi pengecekan (Utility)
+  const isSchoolAllowed = ALLOWED_SCHOOLS.includes(formData.schoolName.toUpperCase());
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -82,6 +92,10 @@ export default function GeneratorForm({ onSubmit, isLoading }: GeneratorFormProp
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isSchoolAllowed) {
+      alert(`Maaf, Satuan Pendidikan "${formData.schoolName}" belum terdaftar.`);
+      return;
+    }
     onSubmit(formData);
   };
 
@@ -115,9 +129,9 @@ export default function GeneratorForm({ onSubmit, isLoading }: GeneratorFormProp
           <div className="space-y-2">
             <label className={labelClass}><Briefcase className="w-4 h-4"/> Jabatan</label>
             <select name="position" value={formData.position} onChange={handleChange} className={inputClass}>
-              <option>Guru Kelas</option>
-              <option>Guru Mata Pelajaran</option>
-              <option>Wali Kelas</option>
+              <option value="Guru Kelas">Guru Kelas</option>
+              <option value="Guru Mata Pelajaran">Guru Mata Pelajaran</option>
+              <option value="Wali Kelas">Wali Kelas</option>
             </select>
           </div>
           <div className="space-y-2">
@@ -191,43 +205,40 @@ export default function GeneratorForm({ onSubmit, isLoading }: GeneratorFormProp
           <h2 className="text-xl font-bold text-mint-900">Metode & Durasi</h2>
         </div>
         
-<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-  <div className="space-y-4">
-    <label className={labelClass}>Jumlah Pertemuan</label>
-    <div className="flex items-center gap-4">
-      {/* Tombol Kurangi */}
-      <button 
-        type="button" 
-        onClick={() => updateMeetings(-1)} 
-        className="w-12 h-12 rounded-xl border-2 border-mint-200 flex items-center justify-center hover:bg-mint-50 transition-colors"
-      >
-        <Minus className="w-5 h-5 text-mint-600"/>
-      </button>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-4">
+            <label className={labelClass}>Jumlah Pertemuan</label>
+            <div className="flex items-center gap-4">
+              <button 
+                type="button" 
+                onClick={() => updateMeetings(-1)} 
+                className="w-12 h-12 rounded-xl border-2 border-mint-200 flex items-center justify-center hover:bg-mint-50 transition-colors"
+              >
+                <Minus className="w-5 h-5 text-mint-600"/>
+              </button>
 
-      {/* Input Langsung */}
-      <input
-        type="number"
-        name="meetings"
-        value={formData.meetings}
-        onChange={(e) => {
-          const val = Math.max(1, parseInt(e.target.value) || 1);
-          const diff = val - formData.meetings;
-          updateMeetings(diff);
-        }}
-        className="w-20 h-12 text-center text-xl font-bold bg-white/50 border-2 border-mint-200 rounded-xl focus:ring-2 focus:ring-mint-500 outline-none transition-all"
-        min="1"
-      />
+              <input
+                type="number"
+                name="meetings"
+                value={formData.meetings}
+                onChange={(e) => {
+                  const val = Math.max(1, parseInt(e.target.value) || 1);
+                  const diff = val - formData.meetings;
+                  updateMeetings(diff);
+                }}
+                className="w-20 h-12 text-center text-xl font-bold bg-white/50 border-2 border-mint-200 rounded-xl focus:ring-2 focus:ring-mint-500 outline-none transition-all"
+                min="1"
+              />
 
-      {/* Tombol Tambah */}
-      <button 
-        type="button" 
-        onClick={() => updateMeetings(1)} 
-        className="w-12 h-12 rounded-xl border-2 border-mint-200 flex items-center justify-center hover:bg-mint-50 transition-colors"
-      >
-        <Plus className="w-5 h-5 text-mint-600"/>
-      </button>
-    </div>
-  </div>
+              <button 
+                type="button" 
+                onClick={() => updateMeetings(1)} 
+                className="w-12 h-12 rounded-xl border-2 border-mint-200 flex items-center justify-center hover:bg-mint-50 transition-colors"
+              >
+                <Plus className="w-5 h-5 text-mint-600"/>
+              </button>
+            </div>
+          </div>
           <div className="space-y-4">
             <label className={labelClass}><Clock className="w-4 h-4"/> Durasi Per Pertemuan</label>
             <input name="duration" value={formData.duration} onChange={handleChange} className={inputClass} placeholder="Contoh: 2 x 35 menit" required />
@@ -293,15 +304,26 @@ export default function GeneratorForm({ onSubmit, isLoading }: GeneratorFormProp
         )}
       </div>
 
-      {/* Submit Button */}
+      {/* 3. PERINGATAN VISUAL */}
+      {formData.schoolName && !isSchoolAllowed && (
+        <div className="mx-4 p-4 bg-orange-50 border border-orange-200 rounded-xl animate-pulse">
+          <p className="text-sm text-orange-700 font-medium">
+            ⚠️ Nama sekolah tidak terdaftar dalam sistem lisensi.
+          </p>
+        </div>
+      )}
+
+      {/* 4. SUBMIT BUTTON */}
       <motion.button
-        whileHover={{ scale: 1.01 }}
-        whileTap={{ scale: 0.99 }}
+        whileHover={!isLoading && formData.dimensi.length > 0 && isSchoolAllowed ? { scale: 1.01 } : {}}
+        whileTap={!isLoading && formData.dimensi.length > 0 && isSchoolAllowed ? { scale: 0.99 } : {}}
         type="submit"
-        disabled={isLoading || formData.dimensi.length === 0}
+        disabled={isLoading || formData.dimensi.length === 0 || !isSchoolAllowed}
         className={cn(
-          "w-full gradient-mint text-white font-bold py-5 rounded-2xl shadow-xl shadow-mint-500/20 flex items-center justify-center gap-3 transition-opacity",
-          (isLoading || formData.dimensi.length === 0) && "opacity-50 cursor-not-allowed"
+          "w-full gradient-mint text-white font-bold py-5 rounded-2xl shadow-xl flex items-center justify-center gap-3 transition-all",
+          (isLoading || formData.dimensi.length === 0 || !isSchoolAllowed) 
+            ? "opacity-40 cursor-not-allowed grayscale" 
+            : "opacity-100 shadow-mint-500/20"
         )}
       >
         {isLoading ? (
@@ -312,7 +334,7 @@ export default function GeneratorForm({ onSubmit, isLoading }: GeneratorFormProp
         ) : (
           <>
             <Send className="w-6 h-6" />
-            Generate Perencanaan Pembelajaran
+            Generate RPPM
           </>
         )}
       </motion.button>
