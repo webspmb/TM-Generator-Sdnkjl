@@ -190,15 +190,42 @@ export default function ModulTable({ data, formInput, onBack }: ModulTableProps)
             <h2 className="text-sm font-bold bg-mint-50 p-2 border border-slate-300">3. DESAIN PEMBELAJARAN</h2>
             <table className="spreadsheet-table">
               <tbody>
-                <tr><td className="w-1/3 font-semibold border border-slate-300 p-2">Capaian Pembelajaran</td><td className="border border-slate-300 p-2">{data.desain.cp}</td></tr>
-                <tr><td className="font-semibold border border-slate-300 p-2">Lintas Disiplin Ilmu</td><td className="border border-slate-300 p-2">{data.desain.crossDisciplinary}</td></tr>
-                <tr><td className="font-semibold border border-slate-300 p-2">Tujuan Pembelajaran</td><td className="border border-slate-300 p-2">{data.desain.tp}</td></tr>
-                <tr><td className="font-semibold border border-slate-300 p-2">Topik Pembelajaran</td><td className="border border-slate-300 p-2">{data.desain.topic}</td></tr>
-                <tr><td className="font-semibold border border-slate-300 p-2">Praktik Pedagogis</td><td className="border border-slate-300 p-2">{data.desain.pedagogy}</td></tr>
-                <tr><td className="font-semibold border border-slate-300 p-2">Kemitraan Pembelajaran</td><td className="border border-slate-300 p-2">{data.desain.partnership}</td></tr>
-                <tr><td className="font-semibold border border-slate-300 p-2">Lingkungan Pembelajaran</td><td className="border border-slate-300 p-2">{data.desain.environment}</td></tr>
-                <tr><td className="font-semibold border border-slate-300 p-2">Pemanfaatan Digital</td><td className="border border-slate-300 p-2">{data.desain.digitalUtilization}</td></tr>
-                <tr><td className="font-semibold border border-slate-300 p-2 bg-mint-50/50">Adaptasi Lokal</td><td className="border border-slate-300 p-2 bg-mint-50/50">{data.desain.adaptasiLokal}</td></tr>
+                <tr>
+                  <td className="w-1/3 font-semibold">Capaian Pembelajaran</td>
+                  <td className="text-justify leading-relaxed">{data.desain.cp}</td>
+                </tr>
+                <tr>
+                  <td className="font-semibold">Lintas Disiplin Ilmu</td>
+                  <td className="text-justify leading-relaxed">{data.desain.crossDisciplinary}</td>
+                </tr>
+                <tr>
+                  <td className="font-semibold">Tujuan Pembelajaran</td>
+                  <td className="text-justify leading-relaxed">{data.desain.tp}</td>
+                </tr>
+                <tr>
+                  <td className="font-semibold">Topik Pembelajaran</td>
+                  <td className="text-justify leading-relaxed">{data.desain.topic}</td>
+                </tr>
+                <tr>
+                  <td className="font-semibold">Praktik Pedagogis</td>
+                  <td className="text-justify leading-relaxed">{data.desain.pedagogy}</td>
+                </tr>
+                <tr>
+                  <td className="font-semibold">Kemitraan Pembelajaran</td>
+                  <td className="text-justify leading-relaxed">{data.desain.partnership}</td>
+                </tr>
+                <tr>
+                  <td className="font-semibold">Lingkungan Pembelajaran</td>
+                  <td className="text-justify leading-relaxed">{data.desain.environment}</td>
+                </tr>
+                <tr>
+                  <td className="font-semibold">Pemanfaatan Digital</td>
+                  <td className="text-justify leading-relaxed">{data.desain.digitalUtilization}</td>
+                </tr>
+                <tr>
+                  <td className="font-semibold">Adaptasi Lokal (Kontekstual)</td>
+                  <td className="text-justify leading-relaxed bg-mint-50/50">{data.desain.adaptasiLokal}</td>
+                </tr>
               </tbody>
             </table>
           </section>
