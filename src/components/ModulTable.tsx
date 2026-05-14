@@ -139,26 +139,28 @@ export default function ModulTable({ data, formInput, onBack }: ModulTableProps)
         <div className="space-y-6">
           {/* Section 1: Identitas */}
           <section>
-            <h2 className="text-xs font-bold bg-slate-100 p-2 border border-slate-300 uppercase tracking-wider">1. IDENTITAS</h2>
-            <table className="w-full border-collapse border border-slate-300 mt-1">
+            <h2 className="text-sm font-bold bg-mint-50 p-2 border border-slate-300">1. IDENTITAS</h2>
+            <table className="spreadsheet-table">
               <tbody>
                 <tr>
-                  <td className="w-1/3 font-semibold border border-slate-300 p-2">Nama Satuan Pendidikan</td>
-                  <td className="border border-slate-300 p-2">{data.identitas.schoolName || formInput.schoolName}</td>
+                  <td className="w-1/3 font-semibold">Nama Satuan Pendidikan</td>
+                  <td>{data.identitas.schoolName}</td>
                 </tr>
                 <tr>
-                  <td className="font-semibold border border-slate-300 p-2">Mata Pelajaran</td>
-                  <td className="border border-slate-300 p-2">{data.identitas.subject}</td>
+                  <td className="font-semibold">Mata Pelajaran</td>
+                  <td>{data.identitas.subject}</td>
                 </tr>
                 <tr>
-                  <td className="font-semibold border border-slate-300 p-2">Kelas/Semester</td>
-                  <td className="border border-slate-300 p-2">{data.identitas.classSemester}</td>
+                  <td className="font-semibold">Kelas/Semester</td>
+                  <td>{data.identitas.classSemester}</td>
                 </tr>
                 <tr>
-                  <td className="font-semibold border border-slate-300 p-2">Pertemuan / Durasi</td>
-                  <td className="border border-slate-300 p-2">
-                    {formInput.meetings} Pertemuan ({data.identitas.duration})
-                  </td>
+                  <td className="font-semibold">Jumlah Pertemuan</td>
+                  <td>{formInput.meetings} Pertemuan</td>
+                </tr>
+                <tr>
+                  <td className="font-semibold">Durasi Pertemuan</td>
+                  <td>{data.identitas.duration}</td>
                 </tr>
               </tbody>
             </table>
