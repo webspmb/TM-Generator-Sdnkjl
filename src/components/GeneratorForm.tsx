@@ -38,7 +38,7 @@ export default function GeneratorForm({ onSubmit, isLoading }: GeneratorFormProp
     principalNip: '',
     level: '',
     grade: '',
-    semester: '',
+    semester: 'I / Ganjil',
     subject: '',
     cp: '',
     tp: '',
