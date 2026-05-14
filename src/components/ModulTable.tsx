@@ -157,7 +157,7 @@ export default function ModulTable({ data, formInput, onBack }: ModulTableProps)
                 <tr>
                   <td className="font-semibold border border-slate-300 p-2">Pertemuan / Durasi</td>
                   <td className="border border-slate-300 p-2">
-                    {data.identitas.meetings || formInput.meetings || '1'} Pertemuan ({data.identitas.duration || formInput.duration})
+                    {data.identitas.meetings || formInput.meetings || '1'} Pertemuan ({data.identitas.duration})
                   </td>
                 </tr>
               </tbody>
