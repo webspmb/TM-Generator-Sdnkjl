@@ -38,14 +38,14 @@ export default function GeneratorForm({ onSubmit, isLoading }: GeneratorFormProp
     principalNip: '',
     level: '',
     grade: '',
-    semester: 'I/Ganjil',
+    semester: '',
     subject: '',
     cp: '',
     tp: '',
     material: '',
     meetings: 1,
     duration: '',
-    pedagogy: ['Inkuiri-Discovery'],
+    pedagogy: [],
     dimensi: []
   });
 
