@@ -25,7 +25,7 @@ export default function ModulTable({ data, formInput, onBack }: ModulTableProps)
         body { font-family: 'Times New Roman', serif; }
         table { border-collapse: collapse; width: 100%; border: 1px solid black; }
         td, th { border: 0.5pt solid black; padding: 8px; font-size: 11pt; vertical-align: top; }
-        .text-justify { text-align: justify; }
+        .text-justify { text-align: justify; text-justify: inter-word; }
         .text-center { text-align: center; }
         .font-bold { font-weight: bold; }
         .uppercase { text-transform: uppercase; }
@@ -232,30 +232,56 @@ export default function ModulTable({ data, formInput, onBack }: ModulTableProps)
             </table>
           </section>
 
-          {/* Section 4: Pengalaman Belajar */}
+{/* Section 4: Pengalaman Belajar */}
           <section>
             <h2 className="text-sm font-bold bg-mint-50 p-2 border border-slate-300">4. PENGALAMAN BELAJAR</h2>
             <table className="spreadsheet-table">
               <tbody>
-                <tr><td className="w-1/3 font-semibold italic">Memahami</td><td className="italic">{data.pengalaman.memahami}</td></tr>
-                <tr><td className="font-semibold">Mengaplikasi</td><td>{data.pengalaman.mengaplikasi}</td></tr>
-                <tr><td className="font-semibold italic">Merefleksi</td><td className="italic">{data.pengalaman.merefleksi}</td></tr>
+                <tr>
+                  <td className="w-1/3 font-semibold italic border border-slate-300 p-2">Memahami</td>
+                  <td className="italic text-justify leading-relaxed border border-slate-300 p-2">
+                    {data.pengalaman.memahami}
+                  </td>
+                </tr>
+                <tr>
+                  <td className="font-semibold border border-slate-300 p-2">Mengaplikasi</td>
+                  <td className="text-justify leading-relaxed border border-slate-300 p-2">
+                    {data.pengalaman.mengaplikasi}
+                  </td>
+                </tr>
+                <tr>
+                  <td className="font-semibold italic border border-slate-300 p-2">Merefleksi</td>
+                  <td className="italic text-justify leading-relaxed border border-slate-300 p-2">
+                    {data.pengalaman.merefleksi}
+                  </td>
+                </tr>
               </tbody>
             </table>
           </section>
 
-          {/* Section 5: Asesmen */}
-          <section>
-            <h2 className="text-xs font-bold bg-slate-100 p-2 border border-slate-300 uppercase tracking-wider">5. ASESMEN PEMBELAJARAN</h2>
-            <table className="w-full border-collapse border border-slate-300 mt-1">
-              <tbody>
-                <tr><td className="w-1/3 font-semibold border border-slate-300 p-2">Asesmen Awal</td><td className="border border-slate-300 p-2">{data.asesmen.awal}</td></tr>
-                <tr><td className="font-semibold border border-slate-300 p-2">Asesmen Proses</td><td className="border border-slate-300 p-2">{data.asesmen.proses}</td></tr>
-                <tr><td className="font-semibold border border-slate-300 p-2">Asesmen Akhir</td><td className="border border-slate-300 p-2">{data.asesmen.akhir}</td></tr>
-              </tbody>
-            </table>
-          </section>
-        </div>
+{/* Section 5: Asesmen */}
+<section>
+  <h2 className="text-xs font-bold bg-slate-100 p-2 border border-slate-300 uppercase tracking-wider">
+    5. ASESMEN PEMBELAJARAN
+  </h2>
+  <table className="w-full border-collapse border border-slate-300 mt-1">
+    <tbody>
+      <tr>
+        <td className="w-1/3 font-semibold border border-slate-300 p-2">Asesmen Awal</td>
+        {/* Tambahkan text-justify di sini */}
+        <td className="border border-slate-300 p-2 text-justify">{data.asesmen.awal}</td>
+      </tr>
+      <tr>
+        <td className="font-semibold border border-slate-300 p-2">Asesmen Proses</td>
+        <td className="border border-slate-300 p-2 text-justify">{data.asesmen.proses}</td>
+      </tr>
+      <tr>
+        <td className="font-semibold border border-slate-300 p-2">Asesmen Akhir</td>
+        <td className="border border-slate-300 p-2 text-justify">{data.asesmen.akhir}</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
 
         {/* Signature */}
         <div className="mt-16 w-full">
