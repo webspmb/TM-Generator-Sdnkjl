@@ -308,7 +308,7 @@ export default function GeneratorForm({ onSubmit, isLoading }: GeneratorFormProp
       {formData.schoolName && !isSchoolAllowed && (
         <div className="mx-4 p-4 bg-orange-50 border border-orange-200 rounded-xl animate-pulse">
           <p className="text-sm text-orange-700 font-medium">
-            ⚠️ Nama sekolah tidak terdaftar dalam sistem lisensi.
+            ⚠️ Lisensi Anda Tidak Terdaftar, Hubungi Developer TM Generator APP (Fidhal Touna AI).
           </p>
         </div>
       )}
