@@ -259,30 +259,28 @@ export default function ModulTable({ data, formInput, onBack }: ModulTableProps)
             </table>
           </section>
 
-{/* Section 5: Asesmen */}
-<section>
-  <h2 className="text-xs font-bold bg-slate-100 p-2 border border-slate-300 uppercase tracking-wider">
-    5. ASESMEN PEMBELAJARAN
-  </h2>
-  <table className="w-full border-collapse border border-slate-300 mt-1">
-    <tbody>
-      <tr>
-        <td className="w-1/3 font-semibold border border-slate-300 p-2">Asesmen Awal</td>
-        {/* Tambahkan text-justify di sini */}
-        <td className="border border-slate-300 p-2 text-justify">{data.asesmen.awal}</td>
-      </tr>
-      <tr>
-        <td className="font-semibold border border-slate-300 p-2">Asesmen Proses</td>
-        <td className="border border-slate-300 p-2 text-justify">{data.asesmen.proses}</td>
-      </tr>
-      <tr>
-        <td className="font-semibold border border-slate-300 p-2">Asesmen Akhir</td>
-        <td className="border border-slate-300 p-2 text-justify">{data.asesmen.akhir}</td>
-      </tr>
-    </tbody>
-  </table>
-</section>
-
+          {/* Section 5: Asesmen */}
+          <section>
+            <h2 className="text-sm font-bold bg-mint-50 p-2 border border-slate-300">5. ASESMEN PEMBELAJARAN</h2>
+            <table className="spreadsheet-table">
+              <tbody>
+                <tr>
+                  <td className="w-1/3 font-semibold">Asesmen Awal</td>
+                  <td className="text-justify leading-relaxed">{data.asesmen.awal}</td>
+                </tr>
+                <tr>
+                  <td className="font-semibold">Asesmen Proses</td>
+                  <td className="text-justify leading-relaxed">{data.asesmen.proses}</td>
+                </tr>
+                <tr>
+                  <td className="font-semibold">Asesmen Akhir</td>
+                  <td className="text-justify leading-relaxed">{data.asesmen.akhir}</td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+        </div>
+        
         {/* Signature */}
         <div className="mt-16 w-full">
           <table className="w-full border-none border-collapse">
