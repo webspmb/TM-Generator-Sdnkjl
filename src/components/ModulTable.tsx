@@ -16,13 +16,13 @@ export default function ModulTable({ data, formInput, onBack }: ModulTableProps)
   const downloadWord = () => {
     if (!containerRef.current) return;
     const content = containerRef.current.innerHTML;
-    const schoolName = data.identitas.schoolName || "DOKUMEN ASLI"; // Fallback jika kosong
+    const schoolName = data.identitas.schoolName || formInput.schoolName || "DOKUMEN ASLI"; 
     
     const header = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
       <head><meta charset='utf-8'><title>RPPM</title>
       <style>
-        @page { size: A4; margin: 2cm; }
-        body { font-family: 'Times New Roman', serif; position: relative; }
+        @page { size: A4; margin: 2cm; mso-footer: f1; }
+        body { font-family: 'Times New Roman', serif; }
         table { border-collapse: collapse; width: 100%; border: 1px solid black; }
         td, th { border: 0.5pt solid black; padding: 8px; font-size: 11pt; vertical-align: top; }
         .text-justify { text-align: justify; }
@@ -31,29 +31,23 @@ export default function ModulTable({ data, formInput, onBack }: ModulTableProps)
         .uppercase { text-transform: uppercase; }
         .bg-mint-50 { background-color: #f0fdf9 !important; }
         .bg-slate-100 { background-color: #f1f5f9 !important; }
-        .italic { font-style: italic; }
-        .spreadsheet-table { border: 0.5pt solid black; width: 100%; }
-        .spreadsheet-table td { border: 0.5pt solid black; padding: 8px; }
-        
-        /* Watermark khusus Word */
-        .watermark-word {
-          position: fixed;
-          top: 50%;
-          left: 0;
-          width: 100%;
-          text-align: center;
-          font-size: 60pt;
-          color: #eeeeee;
-          transform: rotate(-45deg);
-          z-index: -1;
-          opacity: 0.5;
-        }
-      </style></head><body>
-      <div class="watermark-word">${schoolName}</div>
-      ${content}
+        div.Section1 { page: Section1; }
+        p.MsoFooter { margin: 0in; font-size: 9pt; }
+      </style></head>
+      <body>
+        <div class="Section1">
+          ${content}
+          <div style='mso-element:footer' id='f1'>
+            <p class="MsoFooter" style="border-top: 1pt solid black; padding-top: 5pt; color: #666666;">
+              ${schoolName} — RPPM Otomatis
+              <span style='mso-tab-count:2'></span>
+              Halaman <span style='mso-field-code: PAGE '></span>
+            </p>
+          </div>
+        </div>
       </body></html>`;
+
     const cleanedSource = header.replace(/className=/g, 'class=');
-    
     const blob = new Blob(['\ufeff', cleanedSource], { type: 'application/msword' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
@@ -72,45 +66,40 @@ export default function ModulTable({ data, formInput, onBack }: ModulTableProps)
 
   return (
     <div className="max-w-5xl mx-auto space-y-8 pb-32 px-4 relative">
-      {/* CSS Watermark untuk Print Browser */}
       <style dangerouslySetInnerHTML={{ __html: `
-  @media print {
-    .print-watermark {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%) rotate(-45deg);
-      font-size: 5.5rem;
-      font-weight: 900;
-      color: rgba(220, 220, 220, 0.15) !important;
-      z-index: -1;
-      pointer-events: none;
-      white-space: nowrap;
-      display: block !important;
-      text-transform: uppercase;
-      -webkit-print-color-adjust: exact;
-    }
-    .no-print { display: none !important; }
-    @page { margin: 1.5cm; }
-    body { background: white !important; -webkit-print-color-adjust: exact; }
-  }
-
-  .print-watermark { display: none; }
-  .spreadsheet-table { width: 100%; border-collapse: collapse; margin-top: 4px; }
-  .spreadsheet-table td { border: 1px solid #cbd5e1; padding: 8px; }
-  
-  @media screen {
-    .bg-white {
-      min-height: 29.7cm; /* Tinggi minimal A4 */
-      width: 21cm;        /* Lebar A4 */
-      margin-left: auto;
-      margin-right: auto;
-      margin-bottom: 2rem;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1); 
-      overflow: visible; /* Biarkan memanjang jika konten banyak */
-    }
-  }
-` }} />
+        @media print {
+          .print-watermark {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-45deg);
+            font-size: 5.5rem;
+            font-weight: 900;
+            color: rgba(220, 220, 220, 0.15) !important;
+            z-index: -1;
+            pointer-events: none;
+            white-space: nowrap;
+            display: block !important;
+            text-transform: uppercase;
+            -webkit-print-color-adjust: exact;
+          }
+          .no-print { display: none !important; }
+          @page { margin: 1.5cm; }
+          body { background: white !important; -webkit-print-color-adjust: exact; }
+        }
+        .print-watermark { display: none; }
+        .spreadsheet-table { width: 100%; border-collapse: collapse; margin-top: 4px; }
+        .spreadsheet-table td { border: 1px solid #cbd5e1; padding: 8px; }
+        @media screen {
+          .bg-white {
+            min-height: 29.7cm;
+            width: 21cm;
+            margin: 0 auto 2rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); 
+            overflow: visible;
+          }
+        }
+      ` }}></style>
       
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 no-print">
         <button onClick={onBack} className="flex items-center gap-2 text-mint-700 font-bold hover:text-mint-900 transition-colors">
@@ -137,27 +126,25 @@ export default function ModulTable({ data, formInput, onBack }: ModulTableProps)
         </div>
       </div>
 
-      <div ref={containerRef} className="bg-white p-8 md:p-12 shadow-sm border border-slate-200 text-slate-900 relative overflow-hidden">
-        {/* Konten Watermark */}
+      <div ref={containerRef} className="bg-white p-8 md:p-12 shadow-sm border border-slate-200 text-slate-900 relative">
         <div className="print-watermark">
-          {data.identitas.schoolName || "DOKUMEN ASLI"}
+          {data.identitas.schoolName || formInput.schoolName || "DOKUMEN ASLI"}
         </div>
         
-        {/* Judul Dokumen */}
         <div className="text-center mb-10">
           <h1 className="text-xl font-bold uppercase">RENCANA PELAKSANAAN PEMBELAJARAN MENDALAM</h1>
           <p className="text-lg font-bold uppercase mt-1">(RPPM)</p>
         </div>
 
         <div className="space-y-6">
-          {/* Identitas Section */}
+          {/* Section 1: Identitas */}
           <section>
             <h2 className="text-xs font-bold bg-slate-100 p-2 border border-slate-300 uppercase tracking-wider">1. IDENTITAS</h2>
             <table className="w-full border-collapse border border-slate-300 mt-1">
               <tbody>
                 <tr>
                   <td className="w-1/3 font-semibold border border-slate-300 p-2">Nama Satuan Pendidikan</td>
-                  <td className="border border-slate-300 p-2">{data.identitas.schoolName}</td>
+                  <td className="border border-slate-300 p-2">{data.identitas.schoolName || formInput.schoolName}</td>
                 </tr>
                 <tr>
                   <td className="font-semibold border border-slate-300 p-2">Mata Pelajaran</td>
@@ -203,42 +190,15 @@ export default function ModulTable({ data, formInput, onBack }: ModulTableProps)
             <h2 className="text-sm font-bold bg-mint-50 p-2 border border-slate-300">3. DESAIN PEMBELAJARAN</h2>
             <table className="spreadsheet-table">
               <tbody>
-                <tr>
-                  <td className="w-1/3 font-semibold">Capaian Pembelajaran</td>
-                  <td className="text-justify leading-relaxed">{data.desain.cp}</td>
-                </tr>
-                <tr>
-                  <td className="font-semibold">Lintas Disiplin Ilmu</td>
-                  <td className="text-justify leading-relaxed">{data.desain.crossDisciplinary}</td>
-                </tr>
-                <tr>
-                  <td className="font-semibold">Tujuan Pembelajaran</td>
-                  <td className="text-justify leading-relaxed">{data.desain.tp}</td>
-                </tr>
-                <tr>
-                  <td className="font-semibold">Topik Pembelajaran</td>
-                  <td className="text-justify leading-relaxed">{data.desain.topic}</td>
-                </tr>
-                <tr>
-                  <td className="font-semibold">Praktik Pedagogis</td>
-                  <td className="text-justify leading-relaxed">{data.desain.pedagogy}</td>
-                </tr>
-                <tr>
-                  <td className="font-semibold">Kemitraan Pembelajaran</td>
-                  <td className="text-justify leading-relaxed">{data.desain.partnership}</td>
-                </tr>
-                <tr>
-                  <td className="font-semibold">Lingkungan Pembelajaran</td>
-                  <td className="text-justify leading-relaxed">{data.desain.environment}</td>
-                </tr>
-                <tr>
-                  <td className="font-semibold">Pemanfaatan Digital</td>
-                  <td className="text-justify leading-relaxed">{data.desain.digitalUtilization}</td>
-                </tr>
-                <tr>
-                  <td className="font-semibold">Adaptasi Lokal (Kontekstual)</td>
-                  <td className="text-justify leading-relaxed bg-mint-50/50">{data.desain.adaptasiLokal}</td>
-                </tr>
+                <tr><td className="w-1/3 font-semibold border border-slate-300 p-2">Capaian Pembelajaran</td><td className="border border-slate-300 p-2">{data.desain.cp}</td></tr>
+                <tr><td className="font-semibold border border-slate-300 p-2">Lintas Disiplin Ilmu</td><td className="border border-slate-300 p-2">{data.desain.crossDisciplinary}</td></tr>
+                <tr><td className="font-semibold border border-slate-300 p-2">Tujuan Pembelajaran</td><td className="border border-slate-300 p-2">{data.desain.tp}</td></tr>
+                <tr><td className="font-semibold border border-slate-300 p-2">Topik Pembelajaran</td><td className="border border-slate-300 p-2">{data.desain.topic}</td></tr>
+                <tr><td className="font-semibold border border-slate-300 p-2">Praktik Pedagogis</td><td className="border border-slate-300 p-2">{data.desain.pedagogy}</td></tr>
+                <tr><td className="font-semibold border border-slate-300 p-2">Kemitraan Pembelajaran</td><td className="border border-slate-300 p-2">{data.desain.partnership}</td></tr>
+                <tr><td className="font-semibold border border-slate-300 p-2">Lingkungan Pembelajaran</td><td className="border border-slate-300 p-2">{data.desain.environment}</td></tr>
+                <tr><td className="font-semibold border border-slate-300 p-2">Pemanfaatan Digital</td><td className="border border-slate-300 p-2">{data.desain.digitalUtilization}</td></tr>
+                <tr><td className="font-semibold border border-slate-300 p-2 bg-mint-50/50">Adaptasi Lokal</td><td className="border border-slate-300 p-2 bg-mint-50/50">{data.desain.adaptasiLokal}</td></tr>
               </tbody>
             </table>
           </section>
@@ -248,18 +208,9 @@ export default function ModulTable({ data, formInput, onBack }: ModulTableProps)
             <h2 className="text-sm font-bold bg-mint-50 p-2 border border-slate-300">4. PENGALAMAN BELAJAR</h2>
             <table className="spreadsheet-table">
               <tbody>
-                <tr>
-                  <td className="w-1/3 font-semibold">Memahami (Kegiatan Awal)</td>
-                  <td className="text-justify leading-relaxed italic">{data.pengalaman.memahami}</td>
-                </tr>
-                <tr>
-                  <td className="font-semibold">Mengaplikasi (Kegiatan Inti)</td>
-                  <td className="text-justify leading-relaxed">{data.pengalaman.mengaplikasi}</td>
-                </tr>
-                <tr>
-                  <td className="font-semibold">Merefleksi (Kegiatan Penutup)</td>
-                  <td className="text-justify leading-relaxed italic">{data.pengalaman.merefleksi}</td>
-                </tr>
+                <tr><td className="w-1/3 font-semibold italic">Memahami</td><td className="italic">{data.pengalaman.memahami}</td></tr>
+                <tr><td className="font-semibold">Mengaplikasi</td><td>{data.pengalaman.mengaplikasi}</td></tr>
+                <tr><td className="font-semibold italic">Merefleksi</td><td className="italic">{data.pengalaman.merefleksi}</td></tr>
               </tbody>
             </table>
           </section>
@@ -269,39 +220,32 @@ export default function ModulTable({ data, formInput, onBack }: ModulTableProps)
             <h2 className="text-xs font-bold bg-slate-100 p-2 border border-slate-300 uppercase tracking-wider">5. ASESMEN PEMBELAJARAN</h2>
             <table className="w-full border-collapse border border-slate-300 mt-1">
               <tbody>
-                <tr><td className="w-1/3 font-semibold border border-slate-300 p-2">Asesmen Awal</td><td className="border border-slate-300 p-2 text-justify">{data.asesmen.awal}</td></tr>
-                <tr><td className="font-semibold border border-slate-300 p-2">Asesmen Proses</td><td className="border border-slate-300 p-2 text-justify">{data.asesmen.proses}</td></tr>
-                <tr><td className="font-semibold border border-slate-300 p-2">Asesmen Akhir</td><td className="border border-slate-300 p-2 text-justify">{data.asesmen.akhir}</td></tr>
+                <tr><td className="w-1/3 font-semibold border border-slate-300 p-2">Asesmen Awal</td><td className="border border-slate-300 p-2">{data.asesmen.awal}</td></tr>
+                <tr><td className="font-semibold border border-slate-300 p-2">Asesmen Proses</td><td className="border border-slate-300 p-2">{data.asesmen.proses}</td></tr>
+                <tr><td className="font-semibold border border-slate-300 p-2">Asesmen Akhir</td><td className="border border-slate-300 p-2">{data.asesmen.akhir}</td></tr>
               </tbody>
             </table>
           </section>
         </div>
 
-        {/* Signature Section */}
+        {/* Signature */}
         <div className="mt-16 w-full">
-          <table className="w-full border-none border-collapse" style={{ border: 'none' }}>
+          <table className="w-full border-none border-collapse">
             <tbody>
               <tr>
-                {/* Kolom Kiri */}
-                <td className="w-1/2 text-left align-top border-none p-0" style={{ border: 'none' }}>
+                <td className="w-1/2 text-left align-top p-0 border-none">
                   <p className="mb-1">Mengetahui,</p>
                   <p className="mb-0">Kepala Sekolah</p>
-          
-                  {/* Spacer Statis untuk Tanda Tangan */}
                   <div className="mt-20"> 
-                    <p className="font-bold underline mb-0">{formInput.principalName}</p>
+                    <p className="font-bold underline mb-0 uppercase">{formInput.principalName}</p>
                     <p className="text-sm mt-0">NIP. {formInput.principalNip}</p>
                   </div>
                 </td>
-
-                {/* Kolom Kanan */}
-                <td className="w-1/2 text-left align-top border-none p-0" style={{ border: 'none' }}>
+                <td className="w-1/2 text-left align-top p-0 border-none">
                   <p className="mb-1">................., ................... 20....</p>
                   <p className="mb-0">{formInput.position || 'Guru Kelas'}</p>
-          
-                  {/* Spacer Statis yang SAMA (mt-20) */}
                   <div className="mt-20">
-                    <p className="font-bold underline mb-0">{formInput.teacherName}</p>
+                    <p className="font-bold underline mb-0 uppercase">{formInput.teacherName}</p>
                     <p className="text-sm mt-0">NIP. {formInput.teacherNip}</p>
                   </div>
                 </td>
