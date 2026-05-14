@@ -210,7 +210,7 @@ export default function GeneratorForm({ onSubmit, isLoading }: GeneratorFormProp
         name="meetings"
         value={formData.meetings}
         onChange={(e) => {
-          const val = parseInt(e.target.value) || 1;
+          const val = Math.max(1, parseInt(e.target.value) || 1);
           const diff = val - formData.meetings;
           updateMeetings(diff);
         }}
